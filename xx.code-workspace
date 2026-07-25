@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "../xx"
+		},
+		{
+			"path": "../../Downloads/zip"
+		},
+		{
+			"path": "../../Downloads/web"
+		},
+		{
+			"path": "../../Downloads/audio"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "web"
+	}
+}
