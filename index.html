@@ -279,8 +279,18 @@
 <!-- Mobile Nav Header -->
 <nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile py-4 bg-surface/30 backdrop-blur-md border-b border-white/10 md:hidden">
 <div class="font-headline-lg-mobile text-headline-lg-mobile font-medium text-on-surface">Kunal Goswami</div>
-<button class="text-on-surface"><span class="material-symbols-outlined">menu</span></button>
+<button class="text-on-surface p-2 rounded-full hover:bg-white/10 transition-colors duration-300" id="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-menu-panel" aria-label="Toggle navigation">
+<span class="material-symbols-outlined">menu</span>
+</button>
 </nav>
+<div class="fixed top-[72px] left-0 w-full z-40 hidden md:hidden bg-surface/95 backdrop-blur-xl border-b border-white/10 shadow-2xl" id="mobile-menu-panel">
+<ul class="flex flex-col gap-2 px-margin-mobile py-6">
+<li><a class="block py-3 font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-300" href="#work">WORK</a></li>
+<li><a class="block py-3 font-label-caps text-label-caps text-primary font-bold" href="#about">ABOUT</a></li>
+<li><a class="block py-3 font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-300" href="#experience">EXPERIENCE</a></li>
+<li><a class="block py-3 font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-300" href="#contact">CONTACT</a></li>
+</ul>
+</div>
 <!-- Hero Section -->
 <div class="scroll-stage" id="scroll-stage">
 <div class="sticky-wrap">
@@ -714,6 +724,36 @@ VIEW PROJECT <span class="material-symbols-outlined group-hover/link:translate-x
         document.querySelectorAll('.fade-up-element').forEach(el => {
             observer.observe(el);
         });
+
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+
+        if (mobileMenuToggle && mobileMenuPanel) {
+            const mobileMenuIcon = mobileMenuToggle.querySelector('span');
+
+            const closeMobileMenu = () => {
+                mobileMenuPanel.classList.add('hidden');
+                mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                if (mobileMenuIcon) mobileMenuIcon.textContent = 'menu';
+            };
+
+            mobileMenuToggle.addEventListener('click', () => {
+                const isOpen = !mobileMenuPanel.classList.contains('hidden');
+                mobileMenuPanel.classList.toggle('hidden', isOpen);
+                mobileMenuToggle.setAttribute('aria-expanded', String(!isOpen));
+                if (mobileMenuIcon) mobileMenuIcon.textContent = isOpen ? 'menu' : 'close';
+            });
+
+            mobileMenuPanel.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 768) {
+                    closeMobileMenu();
+                }
+            });
+        }
     </script>
     <script>
         // Scroll-driven frame animation — drives the hero background
